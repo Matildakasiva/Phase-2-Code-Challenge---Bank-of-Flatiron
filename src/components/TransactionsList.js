@@ -14,6 +14,9 @@ function TransactionsList() {
       console.log(data)
       setTransactions(data)
     })
+    .catch(error => {
+      console.error('Error fetching transactions:', error)
+    })
   }, [])
   return (
     <table className="ui celled striped padded table">
