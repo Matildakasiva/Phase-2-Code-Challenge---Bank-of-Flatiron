@@ -4,7 +4,6 @@ import Search from "./Search";
 import AddTransactionForm from "./AddTransactionForm";
 
 function AccountContainer() {
-
   const [transactions, setTransactions] = useState([])
   const handleAddTransaction = (transaction) => {
     console.log(transaction)
@@ -12,15 +11,22 @@ function AccountContainer() {
   }
 
   const [searchTerm, setSearchTerm] = useState("")
-  const handleSearch = (value) => {
-    setSearchTerm(value)
+  const [filteredTransactions, setFilteredTransactions] = useState([]);
+  
+  const handleSearch = (term) =>{
+    setSearchTerm(term)
+    setFilteredTransactions(
+      transactions.filter((transaction) =>
+      transaction.description.toLowerCase().includes(term.toLowerCase())
+      )
+    )
   }
   
   return (
     <div>
       <Search onSearch={handleSearch}/>
       <AddTransactionForm onAddTransaction={handleAddTransaction}/>
-      <TransactionsList  transactions={transactions}/>
+      <TransactionsList  transactions={filteredTransactions}/>
     </div>
   );
 }
