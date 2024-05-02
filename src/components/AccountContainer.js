@@ -7,26 +7,21 @@ function AccountContainer() {
   const [transactions, setTransactions] = useState([])
   const handleAddTransaction = (transaction) => {
     console.log(transaction)
-    setTransactions(transactions =>[...transactions, transaction ])
+    setTransactions(prevTransactions =>[...prevTransactions, transactions ])
   }
 
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filteredTransactions, setFilteredTransactions] = useState([]);
-  
-  const handleSearch = (term) =>{
-    setSearchTerm(term)
-    setFilteredTransactions(
-      transactions.filter((transaction) =>
-      transaction.description.toLowerCase().includes(term.toLowerCase())
-      )
-    )
+  const handleSearch = (searchTerm) => {
+    transactions.filter((transaction) => {
+      return transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
+    })
   }
+  
   
   return (
     <div>
-      <Search onSearch={handleSearch}/>
+      <Search transactions={transactions} onSearch={handleSearch}/>
       <AddTransactionForm onAddTransaction={handleAddTransaction}/>
-      <TransactionsList  transactions={filteredTransactions}/>
+      <TransactionsList  transactions={transactions}/>
     </div>
   );
 }

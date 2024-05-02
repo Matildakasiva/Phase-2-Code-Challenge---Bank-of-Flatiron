@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import Transaction from "./Transaction";
 
+
 function TransactionsList() {
   const [transactions, setTransactions] = useState([])
   
   
   useEffect(() => {
-    fetch(`http://localhost:8001/transactions`)
+    fetch(`https://my-json-server.typicode.com/Matildakasiva/Phase-2-Code-Challenge---Bank-of-Flatiron/transactions`)
     .then(res => {
       return res.json()
     })

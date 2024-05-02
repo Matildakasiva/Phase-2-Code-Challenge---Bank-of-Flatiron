@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 
-function Search({ onSearch }) {
+function Search({ transactions, onSearch }) {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-    onSearch(event.target.value);
+  const handleSearch = (event) => {
+    const searchTermValue = event.target.value
+    setSearchTerm(searchTermValue);
+    
+    const  filtered = transactions.filter((transaction) => {
+      return transaction.description.toLowercase().includes(searchTermValue.toLowerCase())
+    })
+    onSearch(filtered)
   };
+
 
   return (
     <div className="ui large fluid icon input">
@@ -14,7 +20,7 @@ function Search({ onSearch }) {
         type="text"
         placeholder="Search your Recent Transactions"
         value={searchTerm}
-        onChange={handleChange}
+        onChange={handleSearch}
       />
       <i className="circular search link icon"></i>
     </div>
