@@ -5,23 +5,24 @@ import AddTransactionForm from "./AddTransactionForm";
 
 function AccountContainer() {
   const [transactions, setTransactions] = useState([])
-  const handleAddTransaction = (transaction) => {
-    console.log(transaction)
-    setTransactions(prevTransactions =>[...prevTransactions, transactions ])
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredTransactions = transactions.filter((transaction) =>transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  function addTransaction(newTransaction) {
+    setTransactions([...transactions, newTransaction])
   }
 
   const handleSearch = (searchTerm) => {
-    transactions.filter((transaction) => {
-      return transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
-    })
-  }
-  
+    setSearchTerm(searchTerm);
+  };
   
   return (
     <div>
       <Search transactions={transactions} onSearch={handleSearch}/>
-      <AddTransactionForm onAddTransaction={handleAddTransaction}/>
-      <TransactionsList  transactions={transactions}/>
+      <AddTransactionForm addTransaction={addTransaction}/>
+      <TransactionsList  transactions={filteredTransactions}/>
     </div>
   );
 }
